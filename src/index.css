@@ -1,0 +1,31 @@
+@import 'tailwindcss';
+
+/* Quran.com-style warm scheme — lightened & modernized */
+@theme {
+  /* Core surfaces */
+  --color-background: #fdfaf6; /* page bg */
+  --color-surface: #faf4eb; /* header / cards */
+  --color-muted: #f6eee2; /* subtle fills */
+  --color-border: #eee2d2; /* borders / dividers */
+  --color-accent: #e6d9c3; /* highlights */
+
+  /* Primary brand (soft green) */
+  --color-primary-400: #7bb894;
+  --color-primary-500: #64ab81; /* main */
+  --color-primary-600: #4d9770;
+  --color-primary-700: #3a7e5b;
+
+  /* Links */
+  --color-link-500: #3a8dcc;
+  --color-link-600: #2f77af;
+
+  /* Neutral text */
+  --color-text-900: #1a1a1a; /* headings */
+  --color-text-700: #454545; /* body */
+  --color-text-500: #757575; /* subtext */
+
+  /* Semantic */
+  --color-success: #3ba772;
+  --color-warning: #d19a3c;
+  --color-danger: #c85c52;
+}
