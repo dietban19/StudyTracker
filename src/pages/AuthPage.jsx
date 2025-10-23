@@ -13,9 +13,9 @@ export default function AuthPage({ children }) {
   if (loading) {
     return (
       <div className="min-h-screen grid place-items-center bg-[var(--color-background)]">
-        <div className="animate-pulse w-[90%] max-w-md">
-          <div className="h-8 w-40 bg-black/10 rounded mb-4" />
-          <div className="h-24 w-full bg-black/10 rounded" />
+        <div className="animate-pulse w-[90%] max-w-sm">
+          <div className="h-8 w-32 bg-black/10 rounded mb-4" />
+          <div className="h-20 w-full bg-black/10 rounded" />
         </div>
       </div>
     );
@@ -27,7 +27,7 @@ export default function AuthPage({ children }) {
 }
 
 function AuthScreen({ onGoogle }) {
-  const [tab, setTab] = useState('in'); // 'in' | 'up'
+  const [tab, setTab] = useState('in');
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
   const [pwVisible, setPwVisible] = useState(false);
@@ -52,190 +52,157 @@ function AuthScreen({ onGoogle }) {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--color-background)]">
-      <div className="mx-auto max-w-6xl px-4 py-10 lg:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-          {/* Left — brand / marketing side */}
-          <div className="order-2 lg:order-1">
+    <div className="min-h-screen bg-[var(--color-background)] flex flex-col">
+      <div className="flex-1 flex items-center justify-center px-4 py-10">
+        <div className="w-full max-w-md bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl shadow-lg p-6 sm:p-8 backdrop-blur-sm">
+          {/* Brand */}
+          <div className="mb-6 text-center">
             <Badge>Semester Tracker</Badge>
-            <h1 className="mt-3 text-3xl sm:text-4xl font-semibold text-[var(--color-text-900)] leading-tight">
-              Stay on top of classes, deadlines, and life — without the chaos.
+            <h1 className="mt-3 text-2xl sm:text-3xl font-semibold text-[var(--color-text-900)]">
+              Stay on top of your semester.
             </h1>
-            <p className="mt-3 text-[var(--color-text-700)]">
-              One place for courses, tasks, and upcoming dates. Clean, fast, and
-              built for students.
+            <p className="mt-2 text-sm text-[var(--color-text-600)]">
+              Clean, fast, and made for students.
             </p>
-            <ul className="mt-6 space-y-2 text-[var(--color-text-700)]">
-              <li className="flex items-center gap-2">
-                <Dot /> Month calendar & quick capture
-              </li>
-              <li className="flex items-center gap-2">
-                <Dot /> Course-linked tasks & reminders
-              </li>
-              <li className="flex items-center gap-2">
-                <Dot /> Simple, distraction-free UI
-              </li>
-            </ul>
           </div>
 
-          {/* Right — auth card */}
-          <div className="order-1 lg:order-2">
-            <div className="mx-auto max-w-md rounded-2xl bg-[var(--color-surface)] backdrop-blur border border-[var(--color-border)] shadow-xl p-6">
-              {/* Tabs */}
-              <div
-                className="flex items-center gap-2 rounded-lg bg-[var(--color-muted)] p-1"
-                role="tablist"
-                aria-label="Authentication"
+          {/* Tabs */}
+          <div
+            className="flex items-center gap-2 rounded-lg bg-[var(--color-muted)] p-1"
+            role="tablist"
+            aria-label="Authentication"
+          >
+            <TabButton
+              active={tab === 'in'}
+              onClick={() => setTab('in')}
+              role="tab"
+              aria-selected={tab === 'in'}
+            >
+              Sign in
+            </TabButton>
+            <TabButton
+              active={tab === 'up'}
+              onClick={() => setTab('up')}
+              role="tab"
+              aria-selected={tab === 'up'}
+            >
+              Create
+            </TabButton>
+          </div>
+
+          {/* Google */}
+          <button
+            onClick={onGoogle}
+            type="button"
+            aria-label="Continue with Google"
+            className="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--color-border)] px-4 py-2.5 text-[var(--color-text-900)] hover:bg-[var(--color-muted)] transition text-sm sm:text-base"
+          >
+            <GoogleIcon />
+            Continue with Google
+          </button>
+
+          {/* Divider */}
+          <div className="my-4 flex items-center">
+            <div className="h-px flex-1 bg-[var(--color-border)]" />
+            <span className="mx-3 text-xs text-[var(--color-text-500)]">
+              or
+            </span>
+            <div className="h-px flex-1 bg-[var(--color-border)]" />
+          </div>
+
+          {/* Email form */}
+          <form onSubmit={handleEmailAuth} className="space-y-4" noValidate>
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-xs font-medium text-[var(--color-text-700)]"
               >
-                <TabButton
-                  active={tab === 'in'}
-                  onClick={() => setTab('in')}
-                  role="tab"
-                  aria-selected={tab === 'in'}
-                >
-                  Sign in
-                </TabButton>
-                <TabButton
-                  active={tab === 'up'}
-                  onClick={() => setTab('up')}
-                  role="tab"
-                  aria-selected={tab === 'up'}
-                >
-                  Create account
-                </TabButton>
-              </div>
+                Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                autoComplete="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="mt-1 w-full rounded-lg border border-[var(--color-border)] bg-white px-3 py-2 text-sm sm:text-base text-[var(--color-text-900)] placeholder-[var(--color-text-500)] outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+                placeholder="you@school.edu"
+              />
+            </div>
 
-              <div className="mt-6">
-                {/* Google */}
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-xs font-medium text-[var(--color-text-700)]"
+              >
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  id="password"
+                  type={pwVisible ? 'text' : 'password'}
+                  autoComplete={
+                    tab === 'in' ? 'current-password' : 'new-password'
+                  }
+                  required
+                  value={pw}
+                  onChange={(e) => setPw(e.target.value)}
+                  className="mt-1 w-full rounded-lg border border-[var(--color-border)] bg-white px-3 py-2 pr-10 text-sm sm:text-base text-[var(--color-text-900)] placeholder-[var(--color-text-500)] outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+                  placeholder="••••••••"
+                />
                 <button
-                  onClick={onGoogle}
                   type="button"
-                  aria-label="Continue with Google"
-                  className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--color-border)] px-4 py-2.5 text-[var(--color-text-900)] hover:bg-[var(--color-muted)] transition"
+                  onClick={() => setPwVisible((v) => !v)}
+                  aria-label={pwVisible ? 'Hide password' : 'Show password'}
+                  className="absolute inset-y-0 right-0 px-3 grid place-items-center text-[var(--color-text-500)] hover:text-[var(--color-text-700)]"
+                  tabIndex={-1}
                 >
-                  <GoogleIcon />
-                  Continue with Google
+                  {pwVisible ? <EyeOffIcon /> : <EyeIcon />}
                 </button>
-
-                {/* Divider */}
-                <div className="my-4 flex items-center">
-                  <div className="h-px flex-1 bg-[var(--color-border)]" />
-                  <span className="mx-3 text-xs text-[var(--color-text-500)]">
-                    or
-                  </span>
-                  <div className="h-px flex-1 bg-[var(--color-border)]" />
-                </div>
-
-                {/* Email form */}
-                <form
-                  onSubmit={handleEmailAuth}
-                  className="space-y-3"
-                  noValidate
-                >
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-xs font-medium text-[var(--color-text-700)]"
-                    >
-                      Email
-                    </label>
-                    <input
-                      id="email"
-                      type="email"
-                      autoComplete="email"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="mt-1 w-full rounded-lg border border-[var(--color-border)] bg-white px-3 py-2 text-[var(--color-text-900)] placeholder-[var(--color-text-500)] outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
-                      placeholder="you@school.edu"
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="password"
-                      className="block text-xs font-medium text-[var(--color-text-700)]"
-                    >
-                      Password
-                    </label>
-                    <div className="relative">
-                      <input
-                        id="password"
-                        type={pwVisible ? 'text' : 'password'}
-                        autoComplete={
-                          tab === 'in' ? 'current-password' : 'new-password'
-                        }
-                        required
-                        value={pw}
-                        onChange={(e) => setPw(e.target.value)}
-                        className="mt-1 w-full rounded-lg border border-[var(--color-border)] bg-white px-3 py-2 pr-10 text-[var(--color-text-900)] placeholder-[var(--color-text-500)] outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
-                        placeholder="••••••••"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setPwVisible((v) => !v)}
-                        aria-label={
-                          pwVisible ? 'Hide password' : 'Show password'
-                        }
-                        className="absolute inset-y-0 right-0 px-3 grid place-items-center text-[var(--color-text-500)] hover:text-[var(--color-text-700)]"
-                        tabIndex={-1}
-                      >
-                        {pwVisible ? (
-                          <EyeOffIcon className="h-5 w-5" />
-                        ) : (
-                          <EyeIcon className="h-5 w-5" />
-                        )}
-                      </button>
-                    </div>
-                  </div>
-
-                  {err && (
-                    <p
-                      className="text-sm"
-                      style={{ color: 'var(--color-danger)' }}
-                      role="alert"
-                    >
-                      {err}
-                    </p>
-                  )}
-
-                  <button
-                    type="submit"
-                    disabled={submitting}
-                    className="mt-1 w-full rounded-xl px-4 py-2.5 text-white font-medium transition disabled:opacity-60"
-                    style={{
-                      background: 'var(--color-text-900)',
-                    }}
-                  >
-                    {submitting
-                      ? tab === 'in'
-                        ? 'Signing in…'
-                        : 'Creating…'
-                      : tab === 'in'
-                      ? 'Sign in'
-                      : 'Create account'}
-                  </button>
-                </form>
-
-                <p className="mt-3 text-xs text-[var(--color-text-500)]">
-                  By continuing, you agree to our Terms and Privacy Policy.
-                </p>
               </div>
             </div>
 
-            {/* Footer mini */}
-            <p className="mt-6 text-center text-xs text-[var(--color-text-500)]">
-              Protected by Firebase Authentication • University email
-              recommended
-            </p>
-          </div>
+            {err && (
+              <p
+                className="text-sm"
+                style={{ color: 'var(--color-danger)' }}
+                role="alert"
+              >
+                {err}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              disabled={submitting}
+              className="mt-2 w-full rounded-xl px-4 py-2.5 text-white font-medium transition disabled:opacity-60 text-sm sm:text-base"
+              style={{ background: 'var(--color-text-900)' }}
+            >
+              {submitting
+                ? tab === 'in'
+                  ? 'Signing in…'
+                  : 'Creating…'
+                : tab === 'in'
+                ? 'Sign in'
+                : 'Create account'}
+            </button>
+          </form>
+
+          <p className="mt-4 text-center text-xs text-[var(--color-text-500)] leading-snug">
+            By continuing, you agree to our Terms and Privacy Policy.
+          </p>
         </div>
       </div>
+
+      <footer className="pb-4 text-center text-xs text-[var(--color-text-500)]">
+        Protected by Firebase Authentication
+      </footer>
     </div>
   );
 }
 
-/* ---------------------------- little UI helpers ---------------------------- */
+/* -------------------------- UI helpers -------------------------- */
 
 function TabButton({ active, children, ...props }) {
   return (
@@ -268,15 +235,6 @@ function Badge({ children }) {
   );
 }
 
-function Dot() {
-  return (
-    <span
-      className="inline-block h-1.5 w-1.5 rounded-full"
-      style={{ background: 'var(--color-border)' }}
-    />
-  );
-}
-
 function GoogleIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5">
@@ -295,6 +253,7 @@ function EyeIcon(props) {
     </svg>
   );
 }
+
 function EyeOffIcon(props) {
   return (
     <svg viewBox="0 0 24 24" className="h-5 w-5" {...props}>
@@ -303,7 +262,7 @@ function EyeOffIcon(props) {
   );
 }
 
-/* ------------------------------- error utils ------------------------------- */
+/* -------------------------- Error helper -------------------------- */
 
 function prettyFirebaseError(err) {
   const msg = String(err?.message || err || '');
@@ -312,7 +271,7 @@ function prettyFirebaseError(err) {
   if (msg.includes('auth/invalid-email'))
     return 'Please enter a valid email address.';
   if (msg.includes('auth/weak-password'))
-    return 'Please choose a stronger password (at least 6 characters).';
+    return 'Password should be at least 6 characters.';
   if (
     msg.includes('auth/invalid-credential') ||
     msg.includes('auth/wrong-password')
