@@ -299,7 +299,7 @@ export default function CourseDetailsModal({
                   </span>
                   <button
                     onClick={() => setConfirmingDelete(true)}
-                    className="rounded-lg bg-red-600 px-3 py-2 text-sm font-medium text-white hover:bg-red-700 disabled:opacity-60"
+                    className="rounded-lg border-1 border-red-600 px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-700 disabled:opacity-60"
                   >
                     Delete course
                   </button>

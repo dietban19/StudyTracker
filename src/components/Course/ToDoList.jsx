@@ -237,7 +237,7 @@ export default function ToDoList({ uid, courseId, accentColor = '#2563EB' }) {
       {items.length === 0 ? (
         <p className="text-xs text-gray-500">No tasks yet.</p>
       ) : (
-        <div className="max-h-[200px] overflow-y-auto rounded-xl border bg-gray-50 p-3 shadow-inner">
+        <div className="max-h-[200px] overflow-y-auto rounded-xl border bg-gray-50 p-3 shadow-inner border-neutral-100">
           <ul className="space-y-3">
             {items.map((t) => {
               const done = (t.status || 'todo') === 'done';
@@ -372,7 +372,7 @@ export default function ToDoList({ uid, courseId, accentColor = '#2563EB' }) {
                       </button>
                       <button
                         onClick={() => remove(t.id)}
-                        className="rounded-md bg-red-500 px-3 py-1 text-xs font-medium text-white hover:bg-red-600"
+                        className="rounded-md border-1 border-red-500 px-3 py-1 text-xs font-medium text-red-600 hover:bg-red-600"
                       >
                         Delete
                       </button>
